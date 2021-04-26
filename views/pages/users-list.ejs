@@ -1,0 +1,215 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CRUD Node.js and Mysql</title>
+  <link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+  <style type="text/css">
+    table{
+        text-align: center;
+    }
+  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+</head>
+<body>
+  <div class="nav" id="navbar">
+            <nav class="nav__container">
+                <div>
+                    <div class="nav__list">
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Navigation</h3>
+
+                            <a href="/home" class="nav__link" style="text-decoration: none;">
+                                <i class='bx bx-user-plus nav__icon' ></i>
+                                <span class="nav__name">Add Account</span>
+                            </a>
+
+                            <a href="/users-list" class="nav__link active" style="text-decoration: none;">
+                                <i class='bx bx-user nav__icon' ></i>
+                                <span class="nav__name">Users List</span>
+                            </a>
+
+                            <a href="/buat-postingan" class="nav__link" style="text-decoration: none;">
+                                <i class='bx bx-plus-circle nav__icon' ></i>
+                                <span class="nav__name">Make Feed</span>
+                            </a>
+
+                            <a href="/download-postingan" class="nav__link" style="text-decoration: none;">
+                                <i class='bx bx-download nav__icon' ></i>
+                                <span class="nav__name">Download Posts</span>
+                            </a>
+                            <a href="/logout">
+                              <span class="nav__name">Logout</span>
+                          </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+    </div>
+
+  <div class="container">
+    <h2>Users List</h2>
+    <table class="table text-center" id="mytable">
+      <thead class="" style="color: white; background-color: rgb(43, 48, 44);">
+        <tr>
+          <th>User ID</th>
+          <th>Profile Pict</th>
+          <th>Nickname</th>
+          <th>Post</th>
+          <th>Followers</th>
+          <th>Following</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+         <% if(userData.length!=0){ var i=1; userData.forEach(function(data){ %>
+        <tr>
+          <td><%=data.user_id %></td>
+          <td><img src="<%=data.linkpp %>" alt="" /></td>
+          <td><%=data.nickname %></td>
+          <td><%=data.postingan %></td>
+          <td><%=data.followers %></td>
+          <td><%=data.following %></td>
+          <td class="status_info" id="status_info"><%=data.status %></td>
+          <td>
+            <!-- <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="<%=data.user_id %>" data-linkpp="<%=data.linkpp %>" data-nickname="<%=data.nickname %>" data-postingan="<%=data.postingan %>" data-followers="<%=data.followers %>" data-following="<%=data.Following %>" data-status="<%=data.status %>" >Edit</a> -->
+            <a href="javascript:void(0);" id="statusActive"class="badge badge-sm badge-info edit" data-id="<%=data.user_id %>" data-linkpp="<%=data.linkpp %>" data-nickname="<%=data.nickname %>" data-postingan="<%=data.postingan %>" data-followers="<%=data.followers %>" data-following="<%=data.Following %>" data-status="<%=data.status %>" >Set Active</a>
+            <a href="javascript:void(0);" class="badge badge-sm badge-danger delete" data-id="<%=data.user_id %>" style=" width: 50px; height: 25px; line-height: 17px;">Delete</a>
+          </td>
+        </tr>
+        <% i++; }) %> <% } else{ %>
+        <tr>
+          <td colspan="10" style="text-align: center">No Data Found</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+   <!-- Edit Modal-->
+   <form action="/users-list/update" method="post">
+       <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Yakin ingin mengaktifkan akun ini?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <!-- <div class="modal-body">
+              <div class="form-group">
+                <select class="form-control status" name="status" placeholder="Status" onchange="cekStatus(this)">
+                  <option>Active</option>
+                  <option>Non-Active</option>
+                </select>
+              </div>
+            </div> -->
+            <div class="modal-footer">
+              <input type="hidden" name="id" class="user_id">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" id="update_btn" class="btn btn-primary confirmation">Ok</button>
+            </div>
+          </div>
+        </div>
+       </div>
+  </form>
+
+   <!-- Delete Modal-->
+    <form id="add-row-form" action="/users-list/delete" method="post">
+       <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Delete User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                 </div>
+                 <div class="modal-body">
+                         <strong>Are You Sure To Delete This Data?</strong>
+                 </div>
+                 <div class="modal-footer">
+                      <input type="hidden" name="user_id" class="form-control user_id2" required>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-danger" onclick="ConfirmDelete()">Delete</button>
+                 </div>
+              </div>
+          </div>
+       </div>
+   </form>
+
+  <!-- webview -->
+  <div class="container">
+    <button id="active_btn" onclick="cekAktif()" class="btn btn-success">Cek</button>
+    <webview id="webviewLogin" class="webviewLogin" src="https://www.instagram.com/accounts/logout" style="height: 600px;" onload="cekAktif()"></webview>
+  </div>
+
+    <script src="/js/navbar.js"></script>
+    <script src="/js/style.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="../../index.js"></script>
+    <script>let $ = require('jquery');</script>
+    <script src="/js/jquery-3.3.1.js"></script>
+    <script>require('popper.js');</script>
+    <script>require('bootstrap');</script>
+    <script src="/js/bootstrap.js"></script>
+    <script> 
+        $(document).ready(function(){
+          //showing data to modal for edit record
+          $('#mytable').on('click','.edit',function(){
+            var user_id = $(this).data('id');
+            // $('.status_' + user_id).html('TES');
+            $('#EditModal').modal('show');
+            $('.user_id').val(user_id);
+          });
+          //showing modal for confirm status
+          $('#mytable').on('click', )
+          //showing modal for delete record
+          $('#mytable').on('click','.delete',function(){
+            var user_id = $(this).data('id');
+            $('#DeleteModal').modal('show');
+            $('.user_id2').val(user_id);
+          });
+        });
+    </script>
+    <script>
+    //    const swal = require('sweetalert2'); 
+        
+        const element = document.querySelectorAll('.status_info');
+        const statusActive = document.querySelectorAll('#statusActive')
+        var i;
+        for (i = 0; i < element.length; i++) {
+          if (element[i].innerHTML == "Active") {
+            element[i].style.color = "green";
+            statusActive[i].style.display = "none";
+          } else {
+            element[i].style.color = "red";
+          }
+        }
+
+    /*    var element = document.getElementById("test");
+
+        //If it isn't "undefined" and it isn't "null", then it exists.
+        if(typeof(element) != 'undefined' && element != null){
+            alert('Element exists!');
+        } else{
+            alert('Element does not exist!');
+        }*/
+    </script>
+    <script>
+     $(document).ready(cekAktif())
+    </script>
+    <script>
+    /* const td = document.querySelectorAll(".status");
+       var i;
+       for (i = 0; i < td.length; i++) {
+         if (td[i].innerHTML == 0) {
+           td[i].innerHTML = "Non-Active";
+         } else {
+           td[i].innerHTML = "Active";
+         }
+       }*/
+    </script>
+  </body>
+</html>

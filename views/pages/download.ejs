@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="shortcut icon" href="https://img.icons8.com/material-rounded/24/000000/download-2.png">
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+	<title>Download Posts</title>
+</head>
+<body>
+	<div class="nav" id="navbar">
+            <nav class="nav__container">
+                <div>
+                    <div class="nav__list">
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Navigation</h3>
+
+                            <a href="/home" class="nav__link" style="text-decoration: none;">
+                                <i class='bx bx-user-plus nav__icon' ></i>
+                                <span class="nav__name">Add Account</span>
+                            </a>
+
+                            <a href="/users-list" class="nav__link" style="text-decoration: none;">
+                                <i class='bx bx-user nav__icon' ></i>
+                                <span class="nav__name">Users List</span>
+                            </a>
+
+                            <a href="/buat-postingan" class="nav__link" style="text-decoration: none;">
+                                <i class='bx bx-plus-circle nav__icon' ></i>
+                                <span class="nav__name">Make Feed</span>
+                            </a>
+
+                            <a href="/download-postingan" class="nav__link active" style="text-decoration: none;">
+                                <i class='bx bx-download nav__icon' ></i>
+                                <span class="nav__name">Download Posts</span>
+                            </a>
+                            <a href="/logout">
+                                <span class="nav__name">Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+    </div>
+
+	<div class="searchBox">
+        <input class="searchInput" type="text" placeholder="Enter the url of the post">
+        <button class="searchButton" onclick="download_img()">
+            <i class="material-icons">file_download</i>
+        </button>
+    </div>
+
+    <script src="/js/navbar.js"></script>
+    <script src="/js/style.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="../../index.js"></script>
+    <script>
+        function download_img(){
+            var URLinput = document.querySelector('.searchInput');
+            console.log(URLinput.value);
+            sendURL(URLinput.value);
+        }
+        function sendURL(URL) {
+            window.location.href = `http://localhost:3000/download-postingan?URL=${URL}`;
+        }
+    </script>
+</body>
+</html>

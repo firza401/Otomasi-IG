@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Login Form Tutorial</title>
+    <style>
+      .login-form {
+        width: 300px;
+        margin: 120px 340px;
+        font-family: Tahoma, Geneva, sans-serif;
+      }
+      .login-form h1 {
+        text-align: center;
+        background: -webkit-linear-gradient(left, #1a2980, #26d0ce);
+        background: -o-linear-gradient(right, #1a2980, #26d0ce);
+        background: -moz-linear-gradient(right, #1a2980, #26d0ce);
+        background: linear-gradient(to right, #1a2980, #26d0ce);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 24px;
+        padding: 20px 0 20px 0;
+      }
+      .login-form input[type="password"],
+      .login-form input[type="text"] {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid #dddddd;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        border-radius: 10px;
+      }
+
+      .btn-grad {
+        background-image: linear-gradient(
+          to right,
+          #242427 0%,
+          #1fccc9 51%,
+          #28282c 100%
+        );
+      }
+      .btn-grad {
+        padding: 15px 45px;
+        text-align: center;
+        text-transform: uppercase;
+        transition: 0.5s;
+        background-size: 200% auto;
+        color: black;
+        border-radius: 10px;
+        display: block;
+        width: 100%;
+        border: none;
+      }
+
+      .btn-grad:hover {
+        background-position: right center; /* change the direction of the change here */
+        color: #fff;
+        text-decoration: none;
+      }
+    </style>
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  </head>
+  <body>
+    <div class="login-form">
+      <h1>Login Form</h1>
+      <form action="/auth" method="POST">
+        <input type="text" name="username" placeholder="Username" required />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <input type="submit" class="btn-grad" />
+      </form>
+    </div>
+  </body>
+</html>

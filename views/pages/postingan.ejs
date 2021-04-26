@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>asdasd</title>
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+</head>
+<body>
+    <h1>Make Feed</h1>
+	<div class="nav" id="navbar">
+            <nav class="nav__container">
+                <div>
+                    <div class="nav__list">
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Navigation</h3>
+
+                            <a href="/home" class="nav__link" style="text-decoration: none;">
+                                <i class='bx bx-user-plus nav__icon' ></i>
+                                <span class="nav__name">Add Account</span>
+                            </a>
+
+                            <a href="/users-list" class="nav__link" style="text-decoration: none;">
+                                <i class='bx bx-user nav__icon' ></i>
+                                <span class="nav__name">Users List</span>
+                            </a>
+
+                            <a href="/buat-postingan" class="nav__link active" style="text-decoration: none;">
+                                <i class='bx bx-plus-circle nav__icon' ></i>
+                                <span class="nav__name">Make Feed</span>
+                            </a>
+
+                            <a href="/download-postingan" class="nav__link" style="text-decoration: none;">
+                                <i class='bx bx-download nav__icon' ></i>
+                                <span class="nav__name">Download Posts</span>
+                            </a>
+                            <a href="/logout">
+                                <span class="nav__name">Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+    </div>
+	
+	<textarea placeholder="Click here to write a caption..." name="comment" form="usrform" style="width: 810px; height: 150px; resize: none;" id="isiCapt"></textarea>
+
+    <button id="upload">Upload File</button>
+    <button onload="postPostingan()" id="coba">coba</button>
+
+    <script src="/js/script.js"></script>
+    <script src="/js/posting.js"></script>
+
+</body>
+</html>
