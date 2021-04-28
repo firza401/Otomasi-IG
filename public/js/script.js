@@ -71,9 +71,6 @@ function tambahdata() {
 }
 
 function windowElectrolizer() {
-  webview.style.display = "inline-flex";
-  webview.style.width = "1000px";
-  webview.style.height = "600px";
 
   let electrolizer = new Electrolizer(webview);
 
@@ -169,7 +166,7 @@ function windowElectrolizer() {
               )
               .evaluate(function () {
                 return document.querySelector(
-                  "#react-root section main div header section ul li:nth-child(3)"
+                  "#react-root.section.main.div.header.section.ul.li:nth-child(3)"
                 ).innerText;
               });
           })

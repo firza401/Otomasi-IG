@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(logger("dev"));
 app.use(cookieParser());
 
+// Db Koneksi
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -31,27 +32,9 @@ connection.connect((err) =>{
   if(err) throw err;
   console.log('Mysql Connected...');
 });
+// End Koneksi
 
-// var connect  = require('express-myconnection')
-
-// app.use(
-//     connect(mysql,{
-//         host     : 'localhost',
-//         user     : 'root',
-//         password : '',
-//         database : 'test',
-//         debug    : false //set true if you wanna see debug logger
-//     },'request')
-
-// );
-
-// var userData;
-// var sql = "SELECT * FROM cobaig";
-//   db.query(sql, function (err, data, fields) {
-//     if (err) throw err;
-//     userData = data;
-// })
-
+// Session
 app.use(
   session({
     secret: "secret",
@@ -60,12 +43,12 @@ app.use(
   })
 );
 
-
-
+// Route Login
 app.get("/", function (request, response) {
   response.sendFile(path.join(__dirname + "/login.html"));
 });
 
+// Login
 app.post("/auth", function (request, response) {
   var username = request.body.username;
   var password = request.body.password;
@@ -91,12 +74,7 @@ app.post("/auth", function (request, response) {
   }
 });
 
-app.get("/logout", function (req, res) {
-  req.session.destroy(function () {
-    res.redirect("/");
-  });
-});
-
+// Route Home
 app.get("/home", function (request, response) {
   if (request.session.loggedin) {
     response.render("pages/home");
@@ -105,6 +83,8 @@ app.get("/home", function (request, response) {
   }
   response.end();
 });
+
+// Route Users List
 app.get("/users-list", function(request, response){
   let sql = "SELECT * FROM cobaig";
   let query = connection.query(sql, (err, results) => {
@@ -114,20 +94,6 @@ app.get("/users-list", function(request, response){
     });
   });
 })
-// app.post("/users-list/:user_id", function(request, response){
-//   if (request.session.loggedin) {
-//     var id= request.params.user_id;
-//     var sql = 'DELETE FROM cobaig WHERE user_id = ?';
-//     db.query(sql, [id], function (err, data) {
-//     if (err) throw err;
-//     console.log(data.affectedRows + " record(s) updated");
-//     });
-//   response.redirect('/home');
-//   } else {
-//     response.send('Please login to view this page! <a href="/logout">Back</a>');
-//   }
-//   response.end();
-// })
 
 //route for update data
 app.post('/users-list/update',(req, res) => {
@@ -152,7 +118,7 @@ app.post('/users-list/delete',(req, res) => {
       res.redirect('/users-list');
   });
 });
-
+// Make Post
 app.get('/buat-postingan',(request,response) =>{
   if (request.session.loggedin) {
     response.render("pages/postingan");
@@ -161,24 +127,30 @@ app.get('/buat-postingan',(request,response) =>{
   }
   response.end();
 })
-
+// Download Post
 app.get('/download-postingan',(request,response) =>{
   if (request.session.loggedin) {
-    response.render("pages/download");
-    var URL = request.query.URL;
-    var myDir='C:/Users/perlengkapan/Documents/ELECTRON/app10-ui/hasil-download';
-    var splitted_URL=URL.slice("/");
-    var array_length=splitted_URL.length;
-    insta_photo_id=splitted_URL[array_length-2]
-    save(insta_photo_id, myDir).then(res => {
-        console.log(res.file);
-      });
-    console.log(insta_photo_id)
+    if (request.query.URL == undefined || request.query.URL == null ) {
+      response.render("pages/download");
+    } else {
+      var URL = request.query.URL
+      var myDir='D:/Downloads/Picture/hasil';
+      var splitted_URL=URL.split('/');
+      var array_length=splitted_URL.length;
+      insta_photo_id=splitted_URL[array_length-2]
+      save(insta_photo_id, myDir).then(res => {
+          console.log(res.file);
+        });
+      console.log(insta_photo_id)
+      return response.render("pages/download")
+    }
   } else {
     response.send('Please login to view this page! <a href="/logout">Back</a>');
   }
   response.end();
 })
+
+// Logout
 app.get('/logout',  function (req, res, next)  {
   if (req.session) {
     // delete session object
@@ -191,6 +163,7 @@ app.get('/logout',  function (req, res, next)  {
     });
   }
 });
+// Express
 app.listen(3000, () => {
   console.log(`Jalan borr di 3000`);
 });

@@ -134,5 +134,5 @@ function postPostingan(){
 
   // await browser.close();
   
-  })();
+  });
 }

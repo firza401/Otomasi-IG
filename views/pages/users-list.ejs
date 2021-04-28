@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>CRUD Node.js and Mysql</title>
+  <title>User List</title>
   <link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
   <style type="text/css">
     table{
@@ -75,8 +75,10 @@
           <td class="status_info" id="status_info"><%=data.status %></td>
           <td>
             <!-- <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="<%=data.user_id %>" data-linkpp="<%=data.linkpp %>" data-nickname="<%=data.nickname %>" data-postingan="<%=data.postingan %>" data-followers="<%=data.followers %>" data-following="<%=data.Following %>" data-status="<%=data.status %>" >Edit</a> -->
-            <a href="javascript:void(0);" id="statusActive"class="badge badge-sm badge-info edit" data-id="<%=data.user_id %>" data-linkpp="<%=data.linkpp %>" data-nickname="<%=data.nickname %>" data-postingan="<%=data.postingan %>" data-followers="<%=data.followers %>" data-following="<%=data.Following %>" data-status="<%=data.status %>" >Set Active</a>
-            <a href="javascript:void(0);" class="badge badge-sm badge-danger delete" data-id="<%=data.user_id %>" style=" width: 50px; height: 25px; line-height: 17px;">Delete</a>
+            <a href="javascript:void(0);" class="badge badge-sm badge-danger delete" data-id="<%=data.user_id %>" style=" width: 80px; height: 25px; line-height: 17px;">Delete</a><br>
+            <a href="javascript:void(0);" id="statusActive"class="badge badge-sm badge-info edit" data-id="<%=data.user_id %>" data-linkpp="<%=data.linkpp %>" data-nickname="<%=data.nickname %>" data-postingan="<%=data.postingan %>" data-followers="<%=data.followers %>" data-following="<%=data.Following %>" data-status="<%=data.status %>" style=" 
+            width: 80px; height: 25px; line-height: 17px; margin-top: 5px;">Set Active</a>
+              
           </td>
         </tr>
         <% i++; }) %> <% } else{ %>
@@ -140,9 +142,9 @@
    </form>
 
   <!-- webview -->
-  <div class="container">
+  <div class="">
     <button id="active_btn" onclick="cekAktif()" class="btn btn-success">Cek</button>
-    <webview id="webviewLogin" class="webviewLogin" src="https://www.instagram.com/accounts/logout" style="height: 600px;" onload="cekAktif()"></webview>
+    <webview id="webviewLogin" class="webviewLogin" src="https://www.instagram.com/accounts/logout" style="display: none ;margin-top: 10px; max-width: 910px; max-height: 600px;" onload="cekAktif()"></webview>
   </div>
 
     <script src="/js/navbar.js"></script>
