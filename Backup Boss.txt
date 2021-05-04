@@ -1,0 +1,62 @@
+// Backup For Delete User
+ app.post("/users-list/:user_id", function(request, response){
+   if (request.session.loggedin) {
+    var id= request.params.user_id;
+     var sql = 'DELETE FROM cobaig WHERE user_id = ?';
+     db.query(sql, [id], function (err, data) {
+     if (err) throw err;
+     console.log(data.affectedRows + " record(s) updated");
+     });
+   response.redirect('/home');
+  } else {
+ response.send('Please login to view this page! <a href="/logout">Back</a>');
+ }
+ response.end();
+ })
+// End Backup
+
+// Backup For Koneksi
+var connect  = require('express-myconnection')
+
+app.use(
+    connect(mysql,{
+        host     : 'localhost',
+        user     : 'root',
+        password : '',
+        database : 'test',
+        debug    : false //set true if you wanna see debug logger
+    },'request')
+
+);
+
+var userData;
+var sql = "SELECT * FROM cobaig";
+  db.query(sql, function (err, data, fields) {
+    if (err) throw err;
+    userData = data;
+})
+// End Backup Koneksi
+
+// Update
+let sql = "UPDATE cobaig SET status='Active' WHERE user_id="+req.body.id;
+  let sql2 = "UPDATE cobaig SET status='Non-Active' WHERE user_id!="+req.body.id;
+  console.log(sql)
+  console.log(sql2)
+  let query = connection.query(sql, (err, results) => {
+    if(err) throw err;
+  });
+  let query2 = connection.query(sql2, (err, results) =>{
+    if (err) throw err;
+  })
+    res.redirect('/users-list')
+
+//Cek 
+con.query("SELECT username && password FROM cobaig WHERE status='Active'", 
+    function (err, result) {
+    if (err) {
+      console.log(err)
+    }else{
+      userActive = result[0].username
+      userActive2 = result[0].password
+    }
+  })

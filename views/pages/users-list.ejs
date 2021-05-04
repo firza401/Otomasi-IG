@@ -8,6 +8,7 @@
         text-align: center;
     }
   </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
   <link rel="stylesheet" type="text/css" href="/css/navbar.css">
@@ -50,11 +51,10 @@
 
   <div class="container">
     <h2>Users List</h2>
-    <table class="table text-center" id="mytable">
+    <table class="table text-center" id="mytable" >
       <thead class="" style="color: white; background-color: rgb(43, 48, 44);">
         <tr>
           <th>User ID</th>
-          <th>Profile Pict</th>
           <th>Nickname</th>
           <th>Post</th>
           <th>Followers</th>
@@ -67,7 +67,6 @@
          <% if(userData.length!=0){ var i=1; userData.forEach(function(data){ %>
         <tr>
           <td><%=data.user_id %></td>
-          <td><img src="<%=data.linkpp %>" alt="" /></td>
           <td><%=data.nickname %></td>
           <td><%=data.postingan %></td>
           <td><%=data.followers %></td>
@@ -75,9 +74,10 @@
           <td class="status_info" id="status_info"><%=data.status %></td>
           <td>
             <!-- <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="<%=data.user_id %>" data-linkpp="<%=data.linkpp %>" data-nickname="<%=data.nickname %>" data-postingan="<%=data.postingan %>" data-followers="<%=data.followers %>" data-following="<%=data.Following %>" data-status="<%=data.status %>" >Edit</a> -->
-            <a href="javascript:void(0);" class="badge badge-sm badge-danger delete" data-id="<%=data.user_id %>" style=" width: 80px; height: 25px; line-height: 17px;">Delete</a><br>
             <a href="javascript:void(0);" id="statusActive"class="badge badge-sm badge-info edit" data-id="<%=data.user_id %>" data-linkpp="<%=data.linkpp %>" data-nickname="<%=data.nickname %>" data-postingan="<%=data.postingan %>" data-followers="<%=data.followers %>" data-following="<%=data.Following %>" data-status="<%=data.status %>" style=" 
-            width: 80px; height: 25px; line-height: 17px; margin-top: 5px;">Set Active</a>
+            width: 80px; height: 25px; line-height: 17px; ;">Set Active</a>
+            <a href="javascript:void(0);" class="badge badge-sm badge-danger delete" data-id="<%=data.user_id %>" style=" margin-top: 5px;width: 80px; height: 25px; line-height: 17px;">Delete</a><br>
+            
               
           </td>
         </tr>
@@ -142,9 +142,9 @@
    </form>
 
   <!-- webview -->
-  <div class="">
-    <button id="active_btn" onclick="cekAktif()" class="btn btn-success">Cek</button>
-    <webview id="webviewLogin" class="webviewLogin" src="https://www.instagram.com/accounts/logout" style="display: none ;margin-top: 10px; max-width: 910px; max-height: 600px;" onload="cekAktif()"></webview>
+  <div class="container">
+    <button id="active_btn" onclick="cekAktif()" class="btn" style="background-color: rgb(43, 48, 44);color: white;">Cek</button>
+    <webview id="webviewLogin" class="webviewLogin" src="https://www.instagram.com/accounts/logout" style="margin-top: 10px; width: 910px; height: 600px;" onload="cekAktif()"></webview>
   </div>
 
     <script src="/js/navbar.js"></script>

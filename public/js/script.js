@@ -105,7 +105,7 @@ function windowElectrolizer() {
           // .wait(".-qQT3")
           // .click(".-qQT3")
           .wait(10000)
-          .goto('https://www.instagram.com/')
+          .click('.sqdOP.yWX7d.y3zKF')
           .wait('#react-root section nav.NXc7H.f11OC div div div.KGiwt div div div:nth-child(5) a')
           .click('#react-root section nav.NXc7H.f11OC div div div.KGiwt div div div:nth-child(5) a')
 
@@ -166,7 +166,7 @@ function windowElectrolizer() {
               )
               .evaluate(function () {
                 return document.querySelector(
-                  "#react-root.section.main.div.header.section.ul.li:nth-child(3)"
+                  "#react-root section main div header section ul li:nth-child(3)"
                 ).innerText;
               });
           })
@@ -238,7 +238,7 @@ function tambahtr() {
   cell5.innerHTML = "wait..";
 }
 
-/*webview login*/
+/*Webview Cek Aktif*/
 function cekAktif() {
   var con = mysql.createConnection({
     host: "localhost",
@@ -247,14 +247,14 @@ function cekAktif() {
     database: "cobaig",
     multipleStatements: true
   })
-  con.query("SELECT username,password FROM cobaig WHERE status='Active'", 
-    function (err, results) {
-    if (err) {
-      console.log(err)
-    }else{
-      userActive = results[0].username
-      userActive2 = results[0].password
-    }
+  con.connect(function(err){
+    if(err) throw(err);
+    var sql = "SELECT * FROM cobaig WHERE status='Active'"
+    con.query(sql,function(err,result){
+      if(err) throw(err);
+      userActive = result[0].username
+      userActive2 = result[0].password
+    })  
   })
   var webviewlogin = document.getElementById("webviewLogin")
   webviewlogin.addEventListener("dom-ready", () => {
@@ -269,5 +269,12 @@ function cekAktif() {
   .type('.pexuQ', ""+userActive+"\u0009"+userActive2+"\u000d")
   .wait(10000)
   .goto('https://www.instagram.com/')
+  .goto('https://www.instagram.com/accounts/logout')
   .run()
+  .then(function(error){
+    if(error) throw(error)
+    swal.fire(
+      'Berhasil Masuk'
+    )
+  })
 }

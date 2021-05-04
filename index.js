@@ -127,6 +127,12 @@ app.get('/buat-postingan',(request,response) =>{
   }
   response.end();
 })
+// Upload Terjadwal
+app.get('/upload-terjadwal', (req,res) => {
+
+  
+})
+
 // Download Post
 app.get('/download-postingan',(request,response) =>{
   if (request.session.loggedin) {
