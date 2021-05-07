@@ -58,7 +58,7 @@
 	<!-- <textarea placeholder="Click here to write a caption..." name="comment" form="usrform" style="width: 810px; height: 150px; resize: none;" id="isiCapt"></textarea> -->
     <!-- Button trigger modal -->
     <button class="badge bg-sm bg-primary border-0" style="margin-top: 10px; width: 80px; height: 30px;" id="upload">Choose File</button>
-    <button onload="postPostingan()" class="badge bg-sm bg-success border-0" style="width: 80px; height: 30px;" id="coba">Upload</button>
+    <button onclick="postPostingan()" class="badge bg-sm bg-success border-0" style="width: 80px; height: 30px;" id="coba">Upload</button>
     <button class="badge bg-info border-0" data-bs-target="#exampleModal" data-bs-toggle="modal" style="width: 130px; height: 30px;">Schedule Upload</button>
     </div>
     
@@ -71,15 +71,22 @@
             <h5 class="modal-title" id="exampleModalLabel">Pilih Tanggal Dan Waktu</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-           <input type="text" name="datepicker" id="datepicker">
-        </div>
+        <form action="" method="get">
+            <div class="modal-body">
+                <input type="text" name="datepicker" id="datepicker">
+            </div>
+        </form>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary" id="submitjadwal" data-bs-dismiss="modal" value="">Submit</button>
       </div>
     </div>
   </div>
+</div>
+<div class="container">
+    <webview 
+    id="wvupload" src="https://www.instagram.com" style="margin-top: 10px; width: 910px; height: 600px;">    
+    </webview>
 </div>
     <script src="/js/script.js"></script>
     <script src="/js/posting.js"></script>
@@ -98,6 +105,13 @@
         flatpickr("#datepicker", {
             enableTime: true,
         });
+    </script>
+    <script>
+        let tombol = document.getElementById("submitjadwal")
+        tombol.addEventListener("click", function(){
+            let teks = document.getElementById("datepicker").value;
+            console.log(teks)
+        })
     </script>
 </body>
 </html>

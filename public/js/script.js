@@ -96,14 +96,6 @@ function windowElectrolizer() {
     .then(function () {
       return (
         electrolizer
-          // .wait(".Fifk5")
-          // .click(".Fifk5")
-          // .wait(1000)
-          // .goto("https://instagram.com/" + uservalue + "")
-          // .wait("._2dbep")
-          // .click("._2dbep")
-          // .wait(".-qQT3")
-          // .click(".-qQT3")
           .wait(10000)
           .click('.sqdOP.yWX7d.y3zKF')
           .wait('#react-root section nav.NXc7H.f11OC div div div.KGiwt div div div:nth-child(5) a')

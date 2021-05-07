@@ -1,12 +1,11 @@
-const puppeteer = require("puppeteer");
 const electron = require('electron');
 const {remote, ipcRenderer} = electron;
-
-const path = require('path'); 
+var { Electrolizer } = require("@ugenu.io/electrolizer");
+const path = require('path');
+const dbase = require('mysql')
 
 const dialog = electron.remote.dialog; 
-var uploadFile = document.getElementById('upload'); 
-  
+var uploadFile = document.getElementById('upload');
 
 global.filepath = undefined; 
 var isiCapt;
@@ -65,74 +64,47 @@ uploadFile.addEventListener('click', () => {
       } 
   }); 
 
-
-var coba = document.getElementById('coba');
+const webviewupl = document.getElementById("wvupload")
+let coba = document.getElementById('coba');
 coba.addEventListener('click', postPostingan)
-
+webviewupl.addEventListener("dom-ready", () => {
+  webviewupl.openDevTools();
+})
 function postPostingan(){
-  var isiCapt = document.getElementById('isiCapt').value
+  var con = dbase.createConnection({
+    host: "localhost", // Replace with your host name
+    user: "root", // Replace with your database username
+    password: "", // Replace with your database password
+    database: "cobaig", // // Replace with your database Name
+  })
+  con.connect(function(err){
+    if(err)throw(err)
+    let i = "SELECT * FROM cobaig WHERE status='Active'";
+  con.query(i, function(error,result){
+  if(error)throw(error);
+  let user1 = result[0].username;
+  let user2 = result[0].password;
+  })
+  
+})
+  let isiCapt = document.getElementById('isiCapt').value
     console.log(isiCapt);
-  (async () => {
+    const electrolizerActive = new Electrolizer(webviewupl)
 
-
-    browser = await puppeteer.launch({
-
-      //executablePath: exPath,
-      "headless":true,
-      "slowMo":0
-    });
-  
-    const page = await browser.newPage();
-   
-    
-    
-   await page.setUserAgent('Mozilla/5.0 (Linux; Android 10; SM-G975U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.93 Mobile Safari/537.36');
-   await page.setDefaultNavigationTimeout(0);
-   console.log("0");
-   
-   await page.goto('https://instagram.com');
-   console.log("1");
-   await page.waitForSelector('.sqdOP')
-   await page.click('.sqdOP');
-   console.log("2");
-   await page.waitForSelector('#loginForm div.Igw0E.IwRSH.eGOV_._4EzTm.kEKum div:nth-child(3) div label input')
-   await page.type('#loginForm div.Igw0E.IwRSH.eGOV_._4EzTm.kEKum div:nth-child(3) div label input', 'raycahyana_')
-   console.log("3");
-   await page.waitForSelector('#loginForm div.Igw0E.IwRSH.eGOV_._4EzTm.kEKum div:nth-child(4) div label input')
-   await page.type('#loginForm div.Igw0E.IwRSH.eGOV_._4EzTm.kEKum div:nth-child(4) div label input', 'Clarasitaputri')
-   console.log("4");
-   await page.keyboard.press('Enter', {delay: 10 })
-   console.log("5");
-    await page.waitFor(7000);
-   await page.goto('https://instagram.com');
-   console.log("6");
-
-  //  await page.waitForSelector('.aOOlW.HoLwm')
-  //  await page.click('.aOOlW.HoLwm');
-  
-   
-   await page.waitFor(10000);
-   console.log("7");
-  
-   const [fileChooser] = await Promise.all([
-    page.waitForFileChooser(),
-    page.click('div[data-testid=new-post-button]')
-   ]);
-   console.log("8");
-   await fileChooser.accept([''+global.filepath+'']);
-   console.log("9");
-   await page.waitForSelector('.UP43G')
-   await page.click('.UP43G');
-   console.log("10");
-   await page.waitFor(3000);
-   await page.click('._472V_')
-   await page.type('._472V_', ''+isiCapt+'')
-   await page.waitForSelector('.UP43G')
-   await page.click('.UP43G');
-   console.log("11");
-  console.log('YOUR PHOTO WAS POSTED ')
-
-  // await browser.close();
-  
-  });
-}
+    electrolizerActive
+    .wait('sqdOP.yWX7d.y3zKF')
+    .click('sqdOP.yWX7d.y3zKF')
+    .exists('_2hvTZ.pexuQ.zyHYP')
+    .then(function (result) {
+      if (result) {
+        function login() {
+          electrolizer
+            .wait('_2hvTZ.pexuQ.zyHYP')
+            .type(
+              '_2hvTZ.pexuQ.zyHYP',"" +user1+ "\u0009" +user2+ "\u000d"
+            );
+        }
+        return postPostingan();
+      }
+    }
+  )}
